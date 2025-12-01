@@ -16,34 +16,31 @@ public class SolverPartTwo {
     this.filePath = filePath;
   }
 
-  private int solve(InputStream in) throws IOException {
-    try (var reader = new BufferedReader(new InputStreamReader(in))) {
-      int result = 0;
-      var lines = reader.readAllLines();
+  private int solve(BufferedReader reader) throws IOException {
+    int result = 0;
+    var lines = reader.readAllLines();
 
-      for (var line : lines) {
-        int oldPos = dial.dialPosition();
+    for (var line : lines) {
+      int oldPos = dial.dialPosition();
 
-        int nbClick = Integer.parseInt(line.substring(1));
+      int nbClick = Integer.parseInt(line.substring(1));
 
-        if (line.startsWith("L")) {
-          if (oldPos - nbClick <= 0) {
-            if (oldPos > 0) {
-              result += 1;
-            }
-            result += Math.abs((oldPos - nbClick) / 100);
+      if (line.startsWith("L")) {
+        if (oldPos - nbClick <= 0) {
+          if (oldPos > 0) {
+            result += 1;
           }
-          dial.turnLeft(nbClick);
-        } else {
-          if (oldPos + nbClick >= 100) {
-            result += Math.abs((oldPos + nbClick) / 100);
-          }
-          dial.turnRight(nbClick);
+          result += Math.abs((oldPos - nbClick) / 100);
         }
-        IO.println(dial.dialPosition());
+        dial.turnLeft(nbClick);
+      } else {
+        if (oldPos + nbClick >= 100) {
+          result += Math.abs((oldPos + nbClick) / 100);
+        }
+        dial.turnRight(nbClick);
       }
-      return result;
     }
+    return result;
   }
 
   public int solve() throws IOException {
@@ -52,7 +49,9 @@ public class SolverPartTwo {
         throw new IOException("File not found: " + filePath);
       }
 
-      return solve(inputStream);
+      try (var reader = new BufferedReader(new InputStreamReader(inputStream))) {
+        return solve(reader);
+      }
     }
   }
 
