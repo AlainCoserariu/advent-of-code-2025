@@ -56,7 +56,7 @@ public class SolverPartTwo {
   }
 
   static void main() throws IOException {
-    var filePath = "input";
+    var filePath = "input.txt";
     var solver = new SolverPartTwo(filePath);
     IO.println(solver.solve());
   }

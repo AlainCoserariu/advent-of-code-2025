@@ -49,7 +49,7 @@ public class Solver {
   }
 
   static void main() throws IOException {
-    var filePath = "input";
+    var filePath = "input.txt";
     var solver = new Solver(filePath);
     IO.println(solver.solve());
   }
